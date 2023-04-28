@@ -90,7 +90,7 @@ $config = [
       ],
     ],
 		'formatter' => [
-			'class' => \shopack\base\frontend\components\Formatter::class,
+			'class' => \shopack\base\common\components\Formatter::class,
 		],
 		'i18n' => [
 			'class' => \shopack\base\common\components\I18N::class,

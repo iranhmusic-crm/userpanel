@@ -37,7 +37,8 @@
         "shopack/yii2-module-aaa-common": "@dev",
         "shopack/yii2-module-aaa-frontend": "@dev",
         "iranhmusic/shopack-module-mha-common": "@dev",
-        "iranhmusic/shopack-module-mha-frontend": "@dev"
+        "iranhmusic/shopack-module-mha-frontend": "@dev",
+        "kartik-v/yii2-popover-x": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

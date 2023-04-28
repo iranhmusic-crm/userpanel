@@ -45,46 +45,57 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '/f
         'innerContainerOptions' => ['class' => ['container-fluid']],
       ]);
 
-      $userMenuItems = [];
-      if (Yii::$app->user->isGuest) {
-        $userMenuItems = [
-          'label' => Yii::t('aaa', 'Login'),
-          'url' => ['/aaa/auth/login'],
-        ];
-      } else {
-        $userMenuItems = [
-          'label' => Yii::t('app', 'Menu'),
+      $userMenuItems = [
+        [
+          'label' => Yii::t('aaa', 'Shopping Card'),
+          'url' => ['/aaa/basket'],
           'options' => ['class' => 'me-0 ms-auto'],
-          'dropdownOptions' => ['class' => 'dropdown-items-reverse'],
-          'items' => [
-            // '<li class="nav-item">' . Html::a(
-            //   'Logout (' . Yii::$app->user->identity->email . ')',
-            //   ['/aaa/auth/logout'],
-            //   [
-            //     'method' => 'post',
-            //     'form' => [
-            //       'csrf' => false,
-            //     ],
-            //     'button' => [
-            //       'class' => 'nav-link btn btn-link logout',
-            //     ],
-            //   ]
-            // ) . '</li>',
-            ['label' => Yii::$app->user->identity->usrEmail ?? (Yii::$app->user->identity->usrMobile ?? '')],
-            '<hr class="dropdown-divider">',
-            ['label' => Yii::t('aaa', 'My Profile'), 'url' => ['/aaa/profile']],
-            '<hr class="dropdown-divider">',
-            ['label' => Yii::t('aaa', 'Logout'), 'url' => ['/aaa/auth/logout']],
+        ],
+      ];
+
+      if (Yii::$app->user->isGuest) {
+        $userMenuItems = array_merge($userMenuItems, [
+          [
+            'label' => Yii::t('aaa', 'Login'),
+            'url' => ['/aaa/auth/login'],
+          ]
+        ]);
+      } else {
+        $userMenuItems = array_merge($userMenuItems, [
+          [
+            'label' => Yii::t('app', 'Menu'),
+            // 'options' => ['class' => 'me-0 ms-auto'],
+            'dropdownOptions' => ['class' => 'dropdown-items-reverse'],
+            'items' => [
+              // '<li class="nav-item">' . Html::a(
+              //   'Logout (' . Yii::$app->user->identity->email . ')',
+              //   ['/aaa/auth/logout'],
+              //   [
+              //     'method' => 'post',
+              //     'form' => [
+              //       'csrf' => false,
+              //     ],
+              //     'button' => [
+              //       'class' => 'nav-link btn btn-link logout',
+              //     ],
+              //   ]
+              // ) . '</li>',
+              ['label' => Yii::$app->user->identity->usrEmail ?? (Yii::$app->user->identity->usrMobile ?? '')],
+              '<hr class="dropdown-divider">',
+              ['label' => Yii::t('aaa', 'Financial'), 'url' => ['/aaa/fin']],
+              ['label' => Yii::t('aaa', 'My Profile'), 'url' => ['/aaa/profile']],
+              '<hr class="dropdown-divider">',
+              ['label' => Yii::t('aaa', 'Logout'), 'url' => ['/aaa/auth/logout']],
+            ],
           ],
-        ];
+        ]);
       }
 
       echo Nav::widget([
         'options' => ['class' => 'navbar-nav w-100'],
-        'items' => [
+        'items' =>
           // ['label' => 'Home', 'url' => ['/site/index']],
           $userMenuItems,
-        ]
       ]);
       NavBar::end();
     ?>
@@ -150,9 +161,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '/f
             'url' => '/mha/member-membership/index',
           ],
           [
-            'label' => Yii::t('mha', 'Financials'),
+            'label' => Yii::t('aaa', 'Financial'),
             // 'icon' => 'badge-dollar',
-            'url' => '/mha/member-financial/index',
+            'url' => '/aaa/fin',
           ],
         ]);
       }
