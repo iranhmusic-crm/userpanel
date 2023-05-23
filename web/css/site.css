@@ -53,7 +53,7 @@ body {
 
 .tabular-nums {
   font-feature-settings: "tnum", "ss01";
-  font-variant-numeric: 'tabular-nums';
+  font-variant-numeric: tabular-nums;
 }
 
 .latin-text {

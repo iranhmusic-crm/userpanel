@@ -57,4 +57,8 @@ return [
 	'Default' => 'پیش فرض',
 
 	'-- Choose --' => '-- انتخاب کنید --',
+	'Loading...' => 'در حال دریافت...',
+	'Not defined' => 'تعیین نشده',
+	'My Information' => 'مشخصات من',
+	'Not approved' => 'تایید نشده',
 ];

@@ -82,8 +82,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '/f
               // ) . '</li>',
               ['label' => Yii::$app->user->identity->usrEmail ?? (Yii::$app->user->identity->usrMobile ?? '')],
               '<hr class="dropdown-divider">',
-              ['label' => Yii::t('aaa', 'Financial'), 'url' => ['/aaa/fin']],
               ['label' => Yii::t('aaa', 'My Profile'), 'url' => ['/aaa/profile']],
+              ['label' => Yii::t('aaa', 'Financial'), 'url' => ['/aaa/fin']],
               '<hr class="dropdown-divider">',
               ['label' => Yii::t('aaa', 'Logout'), 'url' => ['/aaa/auth/logout']],
             ],
@@ -94,7 +94,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '/f
       echo Nav::widget([
         'options' => ['class' => 'navbar-nav w-100'],
         'items' =>
-          // ['label' => 'Home', 'url' => ['/site/index']],
+          // ['label' => 'Home', 'url' => ['/site']],
           $userMenuItems,
       ]);
       NavBar::end();
@@ -105,7 +105,17 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '/f
     <?php
    		$memberModel = Yii::$app->member->memberModel;
 
+      $userInfos = [];
+      if (empty(Yii::$app->user->identity->usrEmail) == false)
+        $userInfos[] = Yii::$app->user->identity->usrEmail;
+      if (empty(Yii::$app->user->identity->usrMobile) == false)
+        $userInfos[] = Yii::$app->user->identity->usrMobile;
+
       $sidebarItems = [
+        [
+          'label' => "<div class='text-center dir-ltr'>" . implode('<br>', $userInfos) . "<hr class='sidemenu-divider'></div>",
+          'encode' => false,
+        ],
         [
           'label' => Yii::t('app', 'Desktop'),
           'icon' => 'home',
@@ -118,17 +128,17 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '/f
           [
             'label' => Yii::t('mha', 'Sponsorships'),
             // 'icon' => 'badge-dollar',
-            'url' => '/mha/member-sponsorship/index',
+            'url' => '/mha/member-sponsorship',
           ],
           [
             'label' => Yii::t('mha', 'Specialties'),
             // 'icon' => 'badge-dollar',
-            'url' => '/mha/member-specialty/index',
+            'url' => '/mha/member-specialty',
           ],
           [
             'label' => Yii::t('mha', 'Kanoons'),
             // 'icon' => 'badge-dollar',
-            'url' => '/mha/member-kanoon/index',
+            'url' => '/mha/member-kanoon',
           ],
           [
             'label' => Yii::t('mha', 'Insurance'),
@@ -136,30 +146,38 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '/f
               [
                 'label' => Yii::t('mha', 'Master Insurances'),
                 // 'icon' => 'badge-dollar',
-                'url' => '/mha/member-master-insurance/index',
+                'url' => '/mha/member-master-insurance',
               ],
               [
                 'label' => Yii::t('mha', 'Master Insurance Documents'),
                 // 'icon' => 'badge-dollar',
-                'url' => '/mha/member-master-ins-doc/index',
+                'url' => '/mha/member-master-ins-doc',
               ],
               [
                 'label' => Yii::t('mha', 'Supplementary Insurance Documents'),
                 // 'icon' => 'badge-dollar',
-                'url' => '/mha/member-supplementary-ins-doc/index',
+                'url' => '/mha/member-supplementary-ins-doc',
               ],
             ],
           ],
           [
             'label' => Yii::t('mha', 'Documents'),
             // 'icon' => 'badge-dollar',
-            'url' => '/mha/member-document/index',
+            'url' => '/mha/member-document',
           ],
-          [
-            'label' => Yii::t('mha', 'Memberships'),
-            // 'icon' => 'badge-dollar',
-            'url' => '/mha/member-membership/index',
-          ],
+        ]);
+
+        if (empty($memberModel->mbrRegisterCode) == false) {
+          $sidebarItems = array_merge($sidebarItems, [
+            [
+              'label' => Yii::t('mha', 'Memberships'),
+              // 'icon' => 'badge-dollar',
+              'url' => '/mha/member-membership',
+            ],
+          ]);
+        }
+
+        $sidebarItems = array_merge($sidebarItems, [
           [
             'label' => Yii::t('aaa', 'Financial'),
             // 'icon' => 'badge-dollar',

@@ -1,14 +1,22 @@
 <?php
 
-$params = require __DIR__ . '/params.php';
 // $db = require __DIR__ . '/db.php';
-$modules = require __DIR__ . '/modules.php';
+$params = array_replace_recursive(
+	require(__DIR__ . '/params.php'),
+	require(__DIR__ . '/params-local.php')
+);
+$modules = array_replace_recursive(
+	require(__DIR__ . '/modules.php'),
+	require(__DIR__ . '/modules-local.php')
+);
+$webLocal = require(__DIR__ . '/web-local.php');
 
 use \yii\web\Request;
 $baseUrl = str_replace('/web', '', (new Request)->getBaseUrl());
 $baseUrl = rtrim($baseUrl, '/') . '/';
 
 $config = [
+	'isJustForMe' => true,
 	'id' => 'userpanel',
 	'name' => 'خانه موسیقی من',
 	'language' => 'fa_IR',
@@ -62,7 +70,7 @@ $config = [
     'request' => [
 			'class' => \shopack\base\common\web\Request::class,
       // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-      'cookieValidationKey' => 'YoiSPpvnJU4fFn-C97-kTjv_8tdyAKO2',
+			'cookieValidationKey' => 'must be define in local file',
 			'baseUrl' => $baseUrl,
     ],
     'cache' => [
@@ -78,7 +86,7 @@ $config = [
       'class' => \yii\symfonymailer\Mailer::class,
       'viewPath' => '@app/mail',
       // send all mails to a file by default.
-      'useFileTransport' => true,
+      'useFileTransport' => false,
     ],
     'log' => [
       'traceLevel' => YII_DEBUG ? 999 : 0,
@@ -185,4 +193,4 @@ if (YII_ENV_DEV) {
   */
 }
 
-return $config;
+return array_replace_recursive($config, $webLocal);
